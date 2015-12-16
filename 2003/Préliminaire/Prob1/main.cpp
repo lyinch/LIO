@@ -15,7 +15,7 @@ int main(){
   }
   cin >> to;
   vector<int>::iterator it = terms.end();
-  for(int j = 0; j < to-n; j++){
+  for(int j = 0; j < to-n; j++){ // loop until to-n because we have the first n digits
     for (int q = 1; q < n+1; q++){ //go to the last term in the vector and add the q previous terms
       ans += *(it-q);
       }
