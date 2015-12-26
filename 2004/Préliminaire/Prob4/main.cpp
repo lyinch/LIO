@@ -18,7 +18,7 @@ bool reached = false;
 void output2d_vector(vector<vector<int> > &field);
 
 
-bool check_steps(vector<vector<int> > field,int x_pos, int y_pos){
+bool check_steps(vector<vector<int> > field,int x_pos, int y_pos,bool print = false){
  
   
   //check that coords are in range
@@ -28,6 +28,9 @@ bool check_steps(vector<vector<int> > field,int x_pos, int y_pos){
   //check if goal has been reached
   if( (x_pos == x_g) && (y_pos == y_g)){
     reached = true; //mark that a solution has been found
+    field[y_g][x_g] = 2; //mark as path
+     if(print)
+      output2d_vector(field);
     return true;
   }
   //if wall hit
@@ -40,15 +43,15 @@ bool check_steps(vector<vector<int> > field,int x_pos, int y_pos){
   
   
   //check south
-  if(check_steps(field,x_pos,y_pos+1) == true)
+  if(check_steps(field,x_pos,y_pos+1,print) == true)
     return true; //if solution found, terminate
 
   //check east
-  if(check_steps(field,x_pos+1,y_pos) == true)
+  if(check_steps(field,x_pos+1,y_pos,print) == true)
     return true;
 
   //check west
-  if(check_steps(field,x_pos-1,y_pos) == true)
+  if(check_steps(field,x_pos-1,y_pos,print) == true)
     return true;
   
   //unmark, path as part of the solution - set 3 as checked
@@ -76,6 +79,7 @@ int main(){
   vector<vector<int> > field(0,v2); //2d vector
   int min_steps;
   int tmp = -1;
+  int bxs,bxg; //best x start/goal
   
   if(input.is_open()){
     input >> x >> y;
@@ -117,15 +121,20 @@ int main(){
      
       check_steps(field,a,0);
      
-      if(((iterp+iterm) < min_steps) && (iterp+iterm != 1))
+      if(((iterp+iterm) < min_steps) && (iterp+iterm != 1)){
+	bxs = a;
+	bxg = b;
 	min_steps = iterp+iterm;
+      }
       iterp = 1;
       iterm = 0;
     }
   }
   
-  if(reached)
-    cout << min_steps << endl;
+  if(reached){
+    x_g = bxg;
+    check_steps(field,bxs,0,true);
+  }
   else
     cout << "-1" << endl;
   
