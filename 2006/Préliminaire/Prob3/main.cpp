@@ -20,13 +20,11 @@ int main(void){
   ifstream input("sudo_in.txt");
 
   if(input.is_open()){
-    cout << "ORIGINAL SUDOKU" << endl;
+   
     for(int y = 0; y < 9; y++){
       for(int x = 0; x < 9; x++){
 	input >> sudoku[y][x];
-	cout << sudoku[y][x] << " ";
-      }
-      cout << "\n";
+      }    
     }
   }else{
     cout << "ERROR READING FILE" << endl;
@@ -80,7 +78,6 @@ int main(void){
       fill_array(check);
     }
     
-    cout << "3*3 check" << endl;
     
     //check 3*3
     for(int a = 0; a < 9; a += 3){
@@ -121,7 +118,7 @@ int main(void){
     
   }while(found);
 
-  cout << "FILLED IN VERSION:" << endl;
+
   for(int y = 0; y < 9; y++){
     for(int x = 0; x < 9; x++){
       cout << sudoku[y][x] << " ";
